@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DebitCardTestNegative {
     private WebDriver driver;
@@ -87,5 +88,14 @@ public class DebitCardTestNegative {
                 driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim());
     }
 
+    @Test
+    void shouldBeFailedEmptyCheckbox() {
+        List<WebElement> elements = driver.findElements(By.className("input__control"));
+        elements.get(0).sendKeys("Салтыков-Щедрин Михаил");
+        elements.get(1).sendKeys("+79178170791");
+        driver.findElement(By.className("button")).click();
+
+        assertTrue(driver.findElement(By.cssSelector("[data-test-id=agreement].input_invalid")).isDisplayed());
+    }
 
 }
